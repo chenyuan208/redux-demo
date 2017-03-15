@@ -23,7 +23,8 @@ export const setUser = (dispatch) => async (user) => {
             type: SET_USER,
             payload: Object.assign(user,{
                 token: result.result.token,
-                uid: result.result.uid
+                uid: result.result.uid,
+                user
             })
         })
         message.success('登陆成功')
@@ -45,7 +46,6 @@ export const loadList = (dispatch)=> async (user) =>{
             message.error('数据加载出错了')
         }
     } else{
-        message.error('请登录');
         browserHistory.push('/')
     }
 }

@@ -24,3 +24,7 @@ body{
 .agz-content{
     height: 824px;
 }
+.agz-header{
+    color: #fff;
+    text-align: right;
+}

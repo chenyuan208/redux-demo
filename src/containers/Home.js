@@ -23,13 +23,13 @@ class Home extends React.Component{
         }
     }
     render(){
-        const {children} = this.props
+        const {children,user} = this.props
         return (
             <div>
                 <Layout>
                     <Sider><Navbar/></Sider>
                     <Layout>
-                        <Header><AgzHeader/></Header>
+                        <Header><AgzHeader user={user}/></Header>
                         <Content><div className="agz-content">{children}</div></Content>
                         <Footer>Footer</Footer>
                     </Layout>
