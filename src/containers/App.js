@@ -1,9 +1,9 @@
-import React, {PropTypes,Component} from 'react'
+import React, {Component} from 'react'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import Longin from '../components/user'
 import {setUser} from '../actions/actions'
-class App extends  Component {
+class App extends  React.Component {
     render (){
         const {dispatch}  =  this.props
         return (
