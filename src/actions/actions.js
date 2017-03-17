@@ -5,23 +5,25 @@ import { message } from 'antd'
 import request from '../http/request'
 import { browserHistory } from 'react-router'
 import 'whatwg-fetch'
+import { componentSchema } from '../schema/schema'
+import { normalize } from 'normalizr'
 export const SET_USER = 'SET_USER'
 
 
 
-export const setUser = (dispatch) => async (user) => {
+export const setUser = (dispatch) => async(user) => {
     const result = await request('/runtime/business/auth/login', {
         method: 'POST',
         data: {
-            type:'0',
-            target:'/',
+            type: '0',
+            target: '/',
             ...user
         }
     })
     if (result.result.status === '0000') {
         dispatch({
             type: SET_USER,
-            payload: Object.assign(user,{
+            payload: Object.assign(user, {
                 token: result.result.token,
                 uid: result.result.uid,
                 user
@@ -34,19 +36,19 @@ export const setUser = (dispatch) => async (user) => {
     }
 }
 
-export const loadList = (dispatch)=> async (user) =>{
-    if( user && user.uid){
+export const loadList = (dispatch) => async(user) => {
+    if (user && user.uid) {
         const result = await request('/v1.1/ide/1/base_component')
         if (!result.result.errorCode) {
+            console.log(componentSchema)
             dispatch({
                 type: 'LOAD_LIST',
-                payload:{list:result.result}
+                payload: {...normalize(result, componentSchema) }
             })
         } else {
             message.error('数据加载出错了')
         }
-    } else{
+    } else {
         browserHistory.push('/')
     }
 }
-

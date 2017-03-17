@@ -1,21 +1,16 @@
-/**
- * Created by chen on 2017/3/13.
- */
 import React from 'react'
-import {Table} from 'antd'
+import { Table } from 'antd'
 import { connect } from 'react-redux'
-import {loadList} from '../actions/actions'
+import { loadList } from '../actions/actions'
 
 
-class List extends React.Component
-{
-    componentDidMount(){
-       const {dispatch,user} = this.props
-       loadList(dispatch)(user)
+class List extends React.Component {
+    componentDidMount() {
+        const { dispatch, user } = this.props
+        loadList(dispatch)(user)
     }
 
-    render()
-    {
+    render() {
         const columns = [{
             title: 'Name',
             dataIndex: 'name',
@@ -44,10 +39,14 @@ class List extends React.Component
                 disabled: record.name === 'Disabled User',    // Column configuration not to be checked
             }),
         };
-        const {list} = this.props
-        return(
+        const {entities,entities:{result} } = this.props.list
+        let dataSource = [];
+        for(let key in result) dataSource.push(result[key])
+        
+        return (
             <div className="agz-table-list">
-                <Table rowSelection={rowSelection} dataSource={list} rowKey="id" columns={columns}  bordered={true}/>
+                <Table rowSelection={rowSelection} dataSource={dataSource}
+                     rowKey="id" columns={columns} bordered={true} />
             </div>
         )
     }
@@ -55,12 +54,12 @@ class List extends React.Component
 
 
 List.propTypes = {
-    list:React.PropTypes.array.isRequired,
-    user:React.PropTypes.object.isRequired
+    list: React.PropTypes.object.isRequired,
+    user: React.PropTypes.object.isRequired
 }
 
 export default connect((state) => {
     return {
-       list:state.component.list,user:state.user
+        list: state.component, user: state.user
     }
 })(List)
